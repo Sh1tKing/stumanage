@@ -24,7 +24,7 @@ public:
 		return birth;
 	}
 	string gettemp() {
-		return id;
+		return temp;
 	}
 	
 };

@@ -59,7 +59,7 @@ void menu::searchmenu() {
 	cout << "            5.返  回" << endl;
 	cout << "****************************************" << endl;
 }
-void menu::searchmenu() {
+void menu::deletemenu() {
 	cout << "****************************************" << endl;
 	cout << "            1.学  生  信  息  删  除" << endl;
 	cout << endl;						
@@ -189,7 +189,7 @@ void menu::basicinfo_edit() {
 	string id, sid, name, gender, birth, temp;
 	cout << "请输入要修改的学生学号：" << endl;
 	cin >> sid;
-	cout << "请输入新添加的学生信息：" << endl;
+	cout << "请输入新的学生信息：" << endl;
 	cout<< "请输入身份证：" << endl;
 	cin >> id;
 	cout << "请输入学号：" << endl;
@@ -203,7 +203,6 @@ void menu::basicinfo_edit() {
 	cout << "请输入备注：" << endl;
 	cin >> temp;
 	Mydata.edit_stubasic(BasicInfo(id, sid, name, gender, birth, temp));
-	cout << "修改成功" << endl;
 	system("pause");
 }
 void menu::score_edit() {
@@ -240,10 +239,6 @@ void menu::score_edit() {
 void menu::kc_edit() {
 	string lid,name,tern,xz;
     float xf;
-	cout << "请输入要修改的学生学号：" << endl;
-	//cin >> id;
-
-	cout << "请输入新添加的成绩信息：" << endl;
 	cout << "请输入要修改的课程编号：" << endl;
 	cin >> lid;
 	cout << "请输入课程名称：" << endl;
@@ -256,7 +251,7 @@ void menu::kc_edit() {
 	cin >> xz;
 	
 	Mydata.edit_stukc(KC(lid, name, tern,xf, xz));
-	cout << "修改成功" << endl;
+	
 	system("pause");
 }
 void menu::jg_edit() {
@@ -282,11 +277,10 @@ void menu::jg_edit() {
 	cin >> address;
 	cout << "请输入邮政编码：" << endl;
 	cin >> postcode;
-	cout << "请输入籍贯班级：" << endl;
+	cout << "请输入籍贯：" << endl;
 	cin >> jg;
 	
 	Mydata.edit_stujg(JG(sid,  name,  xy,  major,  bj, daddress,  gender,  phonenum,  address,postcode,  jg));
-	cout << "添加成功" << endl;
 	system("pause");
 }
 
@@ -297,13 +291,6 @@ void menu::basicinfo_search(){
 	cout << "请输入要查询的学生学号：" << endl;
 	cin >> id;
 	Mydata.search_stubasic(id);
-	system("pause");
-}
-void menu::score_search(){
-	string id;
-	cout << "请输入要查询的学生学号：" << endl;
-	cin >> id;
-	Mydata.search_stuscore(id);
 	system("pause");
 }
 void menu::kc_search(){
@@ -321,6 +308,34 @@ void menu::jg_search(){
 	Mydata.search_stujg(id);
 	system("pause");
 }
+
+//S_search
+void menu::search_singlestu_score() {
+	string id;
+	cout << "请输入要查询的学生学号：" << endl;
+	cin >> id;
+	Mydata.search_singlestuscore(id);
+	system("pause");
+}
+void menu::search_singleL_score() {
+	string lid;
+	cout << "请输入要查询的课程编号：" << endl;
+	cin >> lid;
+	Mydata.search_singleLscore(lid);
+	system("pause");
+}
+void menu::search_xf() {
+	Mydata.searchxf();
+}
+void menu::search_gpa() {
+	cout << "请输入绩点阈值" << endl;
+	float gpa;
+	cin >> gpa;
+	Mydata.searchgpa(gpa);
+}
+
+
+
 
 //delete
 void menu::basicinfo_delete(){

@@ -9,6 +9,7 @@ public:
 	void inputmenu();
 	void searchmenu();
 	void deletemenu();
+	void S_searchmenu();
 
 	//input
 	void basicinfo_input();
@@ -23,7 +24,6 @@ public:
 	void jg_edit();
 	//search
 	void basicinfo_search();
-	void score_search();
 	void kc_search();
 	void jg_search();
 	//delete
@@ -33,5 +33,9 @@ public:
 	void jg_delete();
 
 	//searchscore
-	void S_searchmenu();
+	void search_singlestu_score();
+	void search_singleL_score();
+	void search_xf();
+	void search_gpa();
+
 };

@@ -4,6 +4,9 @@
 #include"Stu_KC.h"
 #include"Stu_JG.h"
 #include<vector>
+struct person {
+	string sid, name;
+};
 class mydata
 {
 public:
@@ -43,9 +46,14 @@ public:
 
 	//search
 	void search_stubasic(string id);
-	void search_stuscore(string id);
 	void search_stukc(string id);
 	void search_stujg(string id);
+
+	//S_search
+	void search_singlestuscore(string id);
+	void search_singleLscore(string lid);
+	void searchxf();
+	void searchgpa(float gpa);
 
 	//delete
 	void delete_stubasic(string id);
@@ -58,5 +66,6 @@ protected:
 	vector<Score> score;
 	vector<KC> kc;
 	vector<JG> jg;
-	vector<string> sid;
+	vector<person> sid;
+	vector<Score> singlescore;
 };

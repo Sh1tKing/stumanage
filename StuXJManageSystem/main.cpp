@@ -4,7 +4,7 @@
 using namespace std;
 int main() {
 	menu Menu;
-	int first_choice = 0, second_choice = 0;
+	int first_choice = 0, second_choice = 0, third_choice = 0;
 	do {
 		Menu.mainmenu();
 		cout << "请输入：" << endl;
@@ -90,7 +90,36 @@ int main() {
 					Menu.basicinfo_search();
 					break;
 				case 2:
-					Menu.score_search();
+					do {
+						system("cls");
+						Menu.S_searchmenu();
+						cout << "请输入：" << endl;
+						cin >> third_choice;
+						system("cls");
+						Menu.S_searchmenu();
+						switch (third_choice)
+						{
+						case 1:
+							Menu.search_singlestu_score();
+							break;
+						case 2:
+							Menu.search_singleL_score();
+							break;
+						case 3:
+							Menu.search_xf();
+							break;
+						case 4:
+							Menu.search_gpa();
+							break;
+						case 5:
+							break;
+						default:
+							cout << "输入错误" << endl;
+							break;
+
+						}
+						system("cls");
+					} while (third_choice != 5);
 					break;
 				case 3:
 					Menu.kc_search();

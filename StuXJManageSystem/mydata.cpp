@@ -34,10 +34,10 @@ void mydata::read_score_data(string id) {
 	string line;
 	while (getline(ifs1, line)) {
 		istringstream str(line);
-		string lid, id, name;
+		string lid, pid, name;
 		float xf, ps_score, qm_score, score, gpa;
 		int tern;
-		str>>lid>>id>>name>>xf>>ps_score>>qm_score>>score>>gpa>>tern;
+		str>>lid>>name>>xf>>ps_score>>qm_score>>score>>tern>>gpa;
 		this->score.push_back(Score(id, lid, name, xf, ps_score, qm_score, score, gpa, tern));
 	}
 	ifs1.close();
@@ -76,7 +76,7 @@ void mydata::write_kc_data() {
 	ofstream ofs1;
 	ofs1.open("data1\\kc.txt", ios::out);
 	for (int i = 0; i < kc.size(); i++) {
-		ofs1 << kc[i].getlid() << " " << kc[i].getname() << " " << kc[i].getxf() << " "<<kc[i].gettern()<<" "<<kc[i].gettern()<<endl;
+		ofs1 << kc[i].getlid() << " " << kc[i].getname() << " " << kc[i].getxf() << " "<<kc[i].gettern()<<" "<<kc[i].gettern()<<" "<<kc[i].getxz()<<endl;
 	}
 	ofs1.close();
 }
@@ -97,20 +97,23 @@ void mydata::write_jg_data() {
 	ofstream ofs1;
 	ofs1.open("data1\\jg.txt", ios::out);
 	for (int i = 0; i < jg.size(); i++) {
-		ofs1 << jg[i].getSid()<<jg[i].getName() << " " << jg[i].getXy() << " " << jg[i].getMajor() << " "<<jg[i].getBj()<<" "<<jg[i].getDaddress()<<" "<<jg[i].getGender() << " " << jg[i].getPhonenum() << " " << jg[i].getAddress() << " "<<jg[i].getPostcode()<<" "<<jg[i].getJg()<<endl;
+		ofs1 << jg[i].getSid() << " " <<jg[i].getName() << " " << jg[i].getXy() << " " << jg[i].getMajor() << " "<<jg[i].getBj()<<" "<<jg[i].getDaddress()<<" "<<jg[i].getGender() << " " << jg[i].getPhonenum() << " " << jg[i].getAddress() << " "<<jg[i].getPostcode()<<" "<<jg[i].getJg()<<endl;
 	}
 	ofs1.close();
 }
 
 void mydata::data_init(){
 	ifstream ifs1;
-	ifs1.open("data1\\studentnum.txt", ios::in);
+	ifs1.open("data1\\stunumname.txt", ios::in);
 	string line;
 	while (getline(ifs1, line)) {
 		istringstream str(line);
-		string sid;
-		str >> sid ;
-		this->sid.push_back(sid);
+		string sid, name;
+		str >> sid >> name;
+		person p;
+		p.sid = sid;
+		p.name = name;
+		this->sid.push_back(p);
 	}
 	ifs1.close();
 	read_basicinfo_data();
@@ -155,7 +158,7 @@ void mydata::add_stubasic(BasicInfo info) {
 	this->add_data(info);
 }
 void mydata::add_stuscore(Score info) {
-	sid.push_back(info.getid());
+	
 	write_score_data(info.getid(),info);
 }
 void mydata::add_stukc(KC info) {
@@ -170,15 +173,23 @@ void mydata::add_stujg(JG info) {
 
 //edit
 void mydata::edit_stubasic(BasicInfo info){
-	string id=info.getid();
-
+	for (int i = 0; i < basicinfo.size(); i++) {
+		if (basicinfo[i].getsid() == info.getsid()) {
+			basicinfo[i] = info;
+			cout << "修改成功" << endl;
+			write_basicinfo_data();
+			return;
+		}
+	}
+	cout << "没有此学生信息" << endl;
+	return;
 }
 void mydata::edit_stuscore(string lid,Score info){
-	for(int i=0;i<sid.size();i++){
-		if(sid[i]==info.getid()){
+	for (int i = 0; i < sid.size(); i++) {
+		if (sid[i].sid == info.getid()) {
 			read_score_data(info.getid());
-			for(int i=0;i<score.size();i++){
-				if(score[i].getlid()==lid){
+			for (int i = 0; i < score.size(); i++) {
+				if (score[i].getlid() == lid) {
 					score[i].setgpa(info.getgpa());
 					score[i].setps_score(info.getps_score());
 					score[i].setqm_score(info.getqm_score());
@@ -188,37 +199,43 @@ void mydata::edit_stuscore(string lid,Score info){
 					score[i].setname(info.getname());
 					score[i].setid(info.getid());
 					score[i].setlid(info.getlid());
-					break;
-				}else{
-					cout<<"未找到该课程信息"<<endl;
-					system("pause");
+					write_allscore_data(info.getid());
+					score.clear();
 					return;
 				}
 			}
-			write_allscore_data(info.getid());
-			score.clear();
-			break;
-		}else{
-			cout<<"未找到该学生信息"<<endl;
+			cout << "未找到该课程信息" << endl;
 			system("pause");
 			return;
 		}
 	}
-	write_score_data(info.getid(),info);
+	cout << "未找到该学生信息" << endl;
+	system("pause");
+	return;
 }
 void mydata::edit_stukc(KC info){
 	for (int i = 0; i < kc.size(); i++) {
 		if (kc[i].getlid() == info.getlid()) {
 			kc[i] = info;
+			cout << "修改成功" << endl;
+			write_kc_data();
+			return;
 		}
 	}
+	cout << "没有此课程编号" << endl;
+	return;
 }
 void mydata::edit_stujg(JG info){
 	for (int i = 0; i < jg.size(); i++) {
 		if (jg[i].getSid() == info.getSid()) {
 			jg[i] = info;
+			cout << "修改成功" << endl;
+			write_jg_data();
+			return;
 		}
 	}
+	cout << "没有此学生信息" << endl;
+	return;
 }
 
 //search
@@ -226,39 +243,13 @@ void mydata::search_stubasic(string id){
 	for (int i = 0; i < basicinfo.size(); i++) {
 		if (basicinfo[i].getsid() == id) {
 			cout<<"-----------------------------"<<endl;
-			cout << "学号："<<basicinfo[i].getsid()<<endl<<"姓名："<<basicinfo[i].getname()<<endl<<"性别："<<basicinfo[i].getgender()<<endl<<"出生年月："<<basicinfo[i].getbirth()<<endl<<"籍贯："<<basicinfo[i].gettemp()<<endl;
+			cout << "学号："<<basicinfo[i].getsid()<<endl<<"姓名："<<basicinfo[i].getname()<<endl<<"性别："<<basicinfo[i].getgender()<<endl<<"出生年月："<<basicinfo[i].getbirth()<<endl<<"备注："<<basicinfo[i].gettemp()<<endl;
 			cout<<"-----------------------------"<<endl;
 			break;
 		}
 	}
 }
-void mydata::search_stuscore(string id){
-	for(int i=0;i<sid.size();i++){
-		if(sid[i]==id){
-			break;
-		}else{
-			cout<<"未找到该学生信息"<<endl;
-			system("pause");
-			return;
-		}
-	}
-	ifstream ifs1;
-	string url="data1\\score\\"+id+".txt";
-	ifs1.open(url, ios::in);
-	string line;
-	cout << "-----------------------------" << endl;
-	while (getline(ifs1, line)) {
-		istringstream str(line);
-		string lid, id, name;
-		float xf, ps_score, qm_score, score, gpa;
-		int tern;
-		str >> id  >> name >> xf >> ps_score >> qm_score >> score >> tern >> gpa;
-		cout << "学号：" << id  << endl << "课程名称：" << name << endl << "学分：" << xf << endl << "平时成绩：" << ps_score << endl << "期末成绩：" << qm_score << endl << "总评：" << score << endl << "绩点：" << gpa << endl << "学期：" << tern << endl;
-		cout << "-----------------------------" << endl;
-	}
-	
-	ifs1.close();
-}
+
 void mydata::search_stukc(string id){
 	for (int i = 0; i < kc.size(); i++) { 
 		if (kc[i].getlid() == id) {
@@ -281,6 +272,109 @@ void mydata::search_stujg(string id){
 	}
 }
 
+//S_search
+void mydata::search_singlestuscore(string id){
+	int check = 0;
+	for(int i=0;i<sid.size();i++){
+		if(sid[i].sid==id){
+			check=1;
+			cout << sid[i].name << endl;
+			break;
+		}
+	}
+	if (check == 0) {
+		cout << "未找到该学生信息" << endl;
+		return;
+	}
+	ifstream ifs1;
+	string url="data1\\score\\"+id+".txt";
+	ifs1.open(url, ios::in);
+	string line;
+	cout << "-----------------------------" << endl;
+	while (getline(ifs1, line)) {
+		istringstream str(line);
+		string lid, id, name;
+		float xf, ps_score, qm_score, score, gpa;
+		int tern;
+		str >> lid  >> name >> xf >> ps_score >> qm_score >> score >> tern >> gpa;
+		cout << "课程编号：" << lid  << endl << "课程名称：" << name << endl << "学分：" << xf << endl << "平时成绩：" << ps_score << endl << "期末成绩：" << qm_score << endl << "总评：" << score << endl << "绩点：" << gpa << endl << "学期：" << tern << endl;
+		cout << "-----------------------------" << endl;
+	}
+	
+	ifs1.close();
+}
+void mydata::search_singleLscore(string lid) {
+	int n;
+	cout << "-----------------------------" << endl;
+	for (int i = 0; i < sid.size(); i++) {
+		read_score_data(sid[i].sid);
+		for (int j = 0; j < score.size(); j++) {
+			if (score[j].getlid() == lid) {
+				cout << "学号：" << sid[i].sid <<endl<< "姓名：" << sid[i].name << endl << "课程名称：" << score[j].getname() << endl << "学分：" << score[j].getxf() << endl << "平时成绩：" << score[j].getps_score() << endl << "期末成绩：" << score[j].getqm_score() << endl << "总评：" << score[j].getscore() << endl << "绩点：" << score[j].getgpa() << endl << "学期：" << score[j].gettern() << endl;
+				cout << "-----------------------------" << endl;
+				singlescore.push_back(score[j]);
+				break;
+			}
+		}
+		score.clear();
+	}
+	cout << "是否对成绩排序(1.升序，2.倒序，3.否)" << endl << "请输入：";
+	cin >> n;
+	if (n == 1) {
+		for (int i = 0; i < singlescore.size()-1; i++) {
+			for (int j = 0; j < singlescore.size()-i-1; j++) {
+				if (singlescore[j].getscore() > singlescore[j + 1].getscore())
+					swap(singlescore[j], singlescore[j + 1]);
+			}
+		}
+		cout << "-----------------------------" << endl;
+		for (int i = 0; i < singlescore.size(); i++) {
+			cout << "学生学号：" << singlescore[i].getid() << "\t课程名称：" << singlescore[i].getname() << "\t总成绩：" << singlescore[i].getscore() << endl;
+		}
+		cout << "-----------------------------" << endl;
+	}
+	else if(n==2){
+		for (int i = 0; i < singlescore.size()-1; i++) {
+			for (int j = 0; j < singlescore.size()-i-1; j++) {
+				if (singlescore[j].getscore() < singlescore[j + 1].getscore())
+					swap(singlescore[j], singlescore[j + 1]);
+			}
+		}
+		cout << "-----------------------------" << endl;
+		for (int i = 0; i < singlescore.size(); i++) {
+			cout << "学生学号：" << singlescore[i].getid()  << "\t课程名称：" << singlescore[i].getname() << "\t总成绩：" << singlescore[i].getscore() << endl;
+		}
+		cout << "-----------------------------" << endl;
+	}
+	else {
+		return;
+	}
+	
+}	
+void mydata::searchxf() {
+	for (int i = 0; i < sid.size(); i++) {
+		read_score_data(sid[i].sid);
+		float sum = 0;
+		for (int j = 0; j < score.size(); j++) {
+			sum += score[j].getxf();
+		}
+		cout << "学号：" << sid[i].sid << " " << "姓名：" << sid[i].name << " " << "总学分：" << sum << endl;
+		score.clear();
+	}
+	system("pause");
+}
+void mydata::searchgpa(float gpa) {
+	for (int i = 0; i < sid.size(); i++) {
+		read_score_data(sid[i].sid);
+		float sum = 0;
+		for (int j = 0; j < score.size(); j++) {
+			sum += score[j].getxf();
+		}
+		if(sum<gpa) cout << "学号：" << sid[i].sid << " " << "姓名：" << sid[i].name << " " << "总学分：" << sum << endl;
+		score.clear();
+	}
+	system("pause");
+}
 
 //delete
 void mydata::delete_stubasic(string id){
@@ -299,7 +393,7 @@ void mydata::delete_stubasic(string id){
 }
 void mydata::delete_stuscore(string id,string lid){
 	for(int i=0;i<sid.size();i++){
-		if (sid[i] == id) {
+		if (sid[i].sid == id) {
 			read_score_data(id);
 			for (int i = 0; i < score.size(); i++) {
 				if (score[i].getlid() == lid) {
