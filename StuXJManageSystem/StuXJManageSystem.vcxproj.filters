@@ -44,5 +44,8 @@
     <ClInclude Include="Stu_KC.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Stu_YX.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,2 +1,5 @@
 ﻿  menu.cpp
+E:\project_file\学生学籍管理系统\StuXJManageSystem\menu.cpp(146,25): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+  mydata.cpp
+  正在生成代码...
   StuXJManageSystem.vcxproj -> E:\project_file\学生学籍管理系统\StuXJManageSystem\x64\Debug\StuXJManageSystem.exe

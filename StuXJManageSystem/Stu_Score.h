@@ -4,7 +4,7 @@
 using namespace std;
 class Score {
 private:
-	string lid, id, name;
+	string lid, id, name,sname;
 	float xf, ps_score, qm_score, score, gpa;
 	int tern;
 public:
@@ -18,6 +18,9 @@ public:
     }
     string getname(){
         return name;
+    }
+    string getsname() {
+        return sname;
     }
     float getxf(){
         return xf;
@@ -38,7 +41,9 @@ public:
         return tern;
     }
 
-
+    void setsname(string sname) {
+        this->sname = sname;
+    }
     void setlid(string lid){
         this->lid = lid;
     }

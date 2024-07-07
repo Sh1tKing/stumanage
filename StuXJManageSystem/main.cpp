@@ -35,6 +35,8 @@ int main() {
 						Menu.jg_input();
 						break;
 					case 5:
+						Menu.yx_input();
+					case 6:
 						break;
 					default:
 						cout<<"输入错误"<<endl;
@@ -67,6 +69,8 @@ int main() {
 					Menu.jg_edit();
 					break;
 				case 5:
+					Menu.yx_edit();
+				case 6:
 					break;
 				default:
 					cout << "输入错误" << endl;
@@ -128,6 +132,8 @@ int main() {
 					Menu.jg_search();
 					break;
 				case 5:
+					Menu.yx_search();
+				case 6:
 					break;
 				default:
 					cout << "输入错误" << endl;
@@ -160,6 +166,8 @@ int main() {
 					Menu.jg_delete();
 					break;
 				case 5:
+					Menu.yx_delete();
+				case 6:
 					break;
 				default:
 					cout << "输入错误" << endl;

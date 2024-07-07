@@ -2,13 +2,14 @@
 #include"Stu_BasicInfo.h"
 #include"Stu_Score.h"
 #include"mydata.h"
+#include "Stu_YX.h"
 using namespace std;
 mydata Mydata;
 menu::menu() {
 	Mydata.data_init();
 }
 void menu::mainmenu() {
-	cout << "************学生学籍管理系统**************" << endl;
+	cout << "************学生学籍管理系统************" << endl;
 	cout << "****************************************" << endl;
 	cout<<"            1.数  据  录  入"<< endl;
 	cout << endl;
@@ -22,7 +23,7 @@ void menu::mainmenu() {
 	cout << "****************************************" << endl;
 }
 void menu::inputmenu() {
-	cout << "************学生学籍管理系统**************" << endl;
+	cout << "************学生学籍管理系统*************" << endl;
 	cout << "****************************************" << endl;
 	cout << "            1.学  生  信  息  录  入" << endl;
 	cout << endl;
@@ -32,11 +33,13 @@ void menu::inputmenu() {
 	cout << endl;						
 	cout << "            4.学  生  籍  贯  录  入" << endl;
 	cout << endl;
-	cout << "            5.返  回" << endl;
+	cout << "            5.院  系  信  息  录  入" << endl;
+	cout << endl;
+	cout << "            6.返  回" << endl;
 	cout << "****************************************" << endl;
 }
 void menu::editmenu() {
-	cout << "************学生学籍管理系统**************" << endl;
+	cout << "***********学生学籍管理系统*************" << endl;
 	cout << "****************************************" << endl;
 	cout << "            1.学  生  信  息  修  改" << endl;
 	cout << endl;						  	  
@@ -46,11 +49,13 @@ void menu::editmenu() {
 	cout << endl;						 	  
 	cout << "            4.学  生  籍  贯  修  改" << endl;
 	cout << endl;
-	cout << "            5.返  回" << endl;
+	cout << "            5.院  系  信  息  修  改" << endl;
+	cout << endl;
+	cout << "            6.返  回" << endl;
 	cout << "****************************************" << endl;
 }
 void menu::searchmenu() {
-	cout << "************学生学籍管理系统**************" << endl;
+	cout << "************学生学籍管理系统************" << endl;
 	cout << "*****************************************" << endl;
 	cout << "            1.学  生  信  息  查  询" << endl;
 	cout << endl;						
@@ -60,11 +65,13 @@ void menu::searchmenu() {
 	cout << endl;						
 	cout << "            4.学  生  籍  贯  查  询" << endl;
 	cout << endl;
-	cout << "            5.返  回" << endl;
+	cout << "            5.院  系  信  息  查  询" << endl;
+	cout << endl;
+	cout << "            6.返  回" << endl;
 	cout << "****************************************" << endl;
 }
 void menu::deletemenu() {
-	cout << "************学生学籍管理系统**************" << endl;
+	cout << "************学生学籍管理系统************" << endl;
 	cout << "******************************************" << endl;
 	cout << "            1.学  生  信  息  删  除" << endl;
 	cout << endl;						
@@ -74,11 +81,13 @@ void menu::deletemenu() {
 	cout << endl;					
 	cout << "            4.学  生  籍  贯  删  除" << endl;
 	cout << endl;
-	cout << "            5.返  回" << endl;
+	cout << "            5.院  系  信  息  删  除" << endl;
+	cout << endl;
+	cout << "            6.返  回" << endl;
 	cout << "****************************************" << endl;
 }
 void menu::S_searchmenu() {
-	cout << "****************************学生学籍管理系统******************************" << endl;
+	cout << "****************************学生学籍管理系统*****************************" << endl;
 	cout << "************************************************************************" << endl;
 	cout << "            1.查 询 单 学 生 所 有 成 绩" << endl;
 	cout << endl;
@@ -115,7 +124,7 @@ void menu::basicinfo_input() {
 void menu::score_input() {
 	
 	string lid, id, name;
-	float xf, ps_score, qm_score, score, gpa;
+	float xf, ps_score, qm_score, score, gpa=0;
 	int tern;
 	cout << "请输入新添加的成绩信息：" << endl;
 	cout << "请输入学号：" << endl;
@@ -132,10 +141,9 @@ void menu::score_input() {
 	cin >> qm_score;
 	cout << "请输入总评：" << endl;
 	cin >> score;
-	cout << "请输入绩点：" << endl;
-	cin >> gpa;
 	cout << "请输入学期：" << endl;
 	cin >> tern;
+	gpa = (score*1.0 - 50) / 10.0;
 	Mydata.add_stuscore(Score(id, lid, name, xf, ps_score, qm_score, score, gpa, tern));
 	cout << "添加成功" << endl;
 	system("pause");	
@@ -182,10 +190,34 @@ void menu::jg_input() {
 	cin >> address;
 	cout << "请输入邮政编码：" << endl;
 	cin >> postcode;
-	cout << "请输入籍贯班级：" << endl;
+	cout << "请输入籍贯：" << endl;
 	cin >> jg;
 	
 	Mydata.add_stujg(JG(sid,  name,  xy,  major,  bj, daddress,  gender,  phonenum,  address,postcode,  jg));
+	cout << "添加成功" << endl;
+	system("pause");
+}
+void menu::yx_input() {
+	string sid, name, xy, major, bj, address, phonenum, time;
+	cout << "请输入新添加的院系信息：" << endl;
+	cout << "请输入学号：" << endl;
+	cin >> sid;
+	cout << "请输入姓名：" << endl;
+	cin >> name;
+	cout << "请输入学院：" << endl;
+	cin >> xy;
+	cout << "请输入专业：" << endl;
+	cin >> major;
+	cout << "请输入班级：" << endl;
+	cin >> bj;
+	cout << "请输入家庭地址：" << endl;
+	cin >> address;
+	cout << "请输入电话号码：" << endl;
+	cin >> phonenum;
+	cout << "请输入入学时间：" << endl;
+	cin >> time;
+
+	Mydata.add_stuyx(YX(sid, name, xy, major, bj, phonenum, address,time));
 	cout << "添加成功" << endl;
 	system("pause");
 }
@@ -262,7 +294,6 @@ void menu::kc_edit() {
 }
 void menu::jg_edit() {
 	string sid, name, xy, major, bj,daddress,gender,phonenum,address,postcode,jg;
-	cout << "请输入新添加的成绩信息：" << endl;
 	cout << "请输入要修改的学生学号：" << endl;
 	cin >> sid;
 	cout << "请输入姓名：" << endl;
@@ -289,6 +320,29 @@ void menu::jg_edit() {
 	Mydata.edit_stujg(JG(sid,  name,  xy,  major,  bj, daddress,  gender,  phonenum,  address,postcode,  jg));
 	system("pause");
 }
+void menu::yx_edit() {
+	string sid, name, xy, major, bj, address, phonenum, time;
+
+	cout << "请输入要修改的学号：" << endl;
+	cin >> sid;
+	cout << "请输入姓名：" << endl;
+	cin >> name;
+	cout << "请输入学院：" << endl;
+	cin >> xy;
+	cout << "请输入专业：" << endl;
+	cin >> major;
+	cout << "请输入班级：" << endl;
+	cin >> bj;
+	cout << "请输入家庭地址：" << endl;
+	cin >> address;
+	cout << "请输入电话号码：" << endl;
+	cin >> phonenum;
+	cout << "请输入入学时间：" << endl;
+	cin >> time;
+
+	Mydata.edit_stuyx(YX(sid, name, xy, major, bj, phonenum, address, time));
+	system("pause");
+}
 
 
 //search
@@ -312,6 +366,13 @@ void menu::jg_search(){
 	cout << "请输入要查询的学生学号：" << endl;
 	cin >> id;
 	Mydata.search_stujg(id);
+	system("pause");
+}
+void menu::yx_search() {
+	string id;
+	cout << "请输入要查询的学生学号：" << endl;
+	cin >> id;
+	Mydata.search_stuyx(id);
 	system("pause");
 }
 
@@ -360,7 +421,7 @@ void menu::score_delete(){
 }
 void menu::kc_delete(){
 	string id;
-	cout << "请输入要删除的学生学号：" << endl;
+	cout << "请输入要删除的课程编号：" << endl;
 	cin >> id;
 	Mydata.delete_stukc(id);
 }
@@ -369,4 +430,11 @@ void menu::jg_delete(){
 	cout << "请输入要删除的学生学号：" << endl;
 	cin >> id;
 	Mydata.delete_stujg(id);
+
+}
+void menu::yx_delete() {
+	string id;
+	cout << "请输入要删除的学生学号：" << endl;
+	cin >> id;
+	Mydata.delete_stuyx(id);
 }

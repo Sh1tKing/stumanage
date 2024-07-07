@@ -138,6 +138,7 @@
     <ClInclude Include="Stu_JG.h" />
     <ClInclude Include="Stu_KC.h" />
     <ClInclude Include="Stu_Score.h" />
+    <ClInclude Include="Stu_YX.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
